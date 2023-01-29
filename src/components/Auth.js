@@ -1,10 +1,18 @@
 import React from "react";
-import { auth, provider } from "../firebase-config";
+import { auth, provider } from "../firebase-config.js";
 import { signInWithPopup } from "firebase/auth";
 
-const Auth = () => {
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
+export const Auth = () => {
   const signInWithGoogle = async () => {
-    await signInWithPopup(auth, provider);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      cookies.set("auth-token", result.user.refreshToken);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -14,5 +22,3 @@ const Auth = () => {
     </div>
   );
 };
-
-export default Auth;
