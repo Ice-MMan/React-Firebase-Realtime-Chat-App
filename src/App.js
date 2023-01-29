@@ -2,7 +2,7 @@ import "./App.css";
 import { Auth } from "./components/Auth";
 import Cookies from "universal-cookie";
 import { useState, useRef } from "react";
-import Chat from "./components/Chat";
+import Chat from "./components/Chat.js";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase-config";
 
@@ -11,8 +11,7 @@ const cookies = new Cookies();
 function App() {
   const [isAuth, setIsAuth] = useState(cookies.get("auth-token"));
   const [room, setRoom] = useState(null);
-
-  const roomInpuTRef = useRef(null);
+  const roomInputRef = useRef(null);
 
   const signUserOut = async () => {
     await signOut(auth);
@@ -38,8 +37,8 @@ function App() {
       ) : (
         <div className="room">
           <label>Enter Room Name</label>
-          <input ref={roomInpuTRef} />
-          <button onClick={() => setRoom(roomInpuTRef.current.value)}>
+          <input ref={roomInputRef} />
+          <button onClick={() => setRoom(roomInputRef.current.value)}>
             Enter Chat
           </button>
         </div>
